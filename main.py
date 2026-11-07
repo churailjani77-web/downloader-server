@@ -28,10 +28,14 @@ def get_tiktok(url: str):
         result = json.loads(response.read().decode('utf-8'))
         data = result.get("data", {})
         play_url = data.get("play") or data.get("wmplay")
-        if play_url:
+      if play_url:
+            title = data.get("title")
+            if not title or not str(title).strip():
+                title = "TikTok Video"
+
             return {
                 "success": True,
-                "title": data.get("title", "TikTok Video"),
+                "title": title,
                 "thumbnail": data.get("cover"),
                 "video_url": play_url,
                 "platform": "TikTok"
